@@ -1,0 +1,24 @@
+1. The design as presented would need the following pieces of software:
+	A geolocation service that will calculate the distance between two addresses. This should probably be a third-party service.
+	An API to receive distance queries from the user interface, translate and forward those to the geolocation service, store the results as historical records, and return those results to the user interface
+	A front-end web application w/ responsive, fluid layout for mobile and desktop use.
+	A database of some kind for storing historical records.
+	A caching system. This might not be needed immediately, depending on traffic, but should be planned. Could be directly integrated with the API or the database, or could be an intermediate layer.
+   
+	The business case description and team composition imply a need for the following that are not specifically called for in the design or the coding exercise:
+	A user management API to handle user CRUD, authentication, and authorization
+	A database for user information
+	Changes to the historical database to associate records with a user
+	A data lake or warehouse to store historical records for analysis
+	A data archiving process (hot/warm/cold storage). This could be a separate cron/batch process, or integrated with the database itself (Elastic provides built in support for this, others probably do too)
+	Some kind of data analysis tool. I would need to consult with the data scientist and the impact lead to know what kind of data insights they are hoping to capture.
+
+2. This is essentially a microservice architecture, though there are elements of n-tier architecture as well (the separation of presentation, business logic, and data persistence). Dividing the various functions into separate layers and services makes it easier to maintain, extend, and scale the application over time and makes the overall system more robust.
+
+3. Given the simplicity of the initial design, the small team size, and the speed needed to put a prototype into use testing ASAP, I would use a hybrid Scrum approach with short iterations, single-piece workflow, mob development (at least 50% time with engineer(s), designer, and lead together), TDD, and automated unit and E2E tests.
+
+4. Git strategy would be simple. With single-piece workflow, each software repo would at most need a WIP and a master branch. If members are collaborating remotely, a tool like mob (https://mob.sh) makes this easy to manage.
+
+5. No, I don't think any more people are required, but another developer with a particular focus on front-end development would help. If the designer is a developer/engineer as well, that's enough. Depending on team composition, I would be either the sole or the back-end-specialized engineer. Once the prototype has been rolled out, it would probably be helpful to add another person or two; the business case suggests a much more complex and robust product than the initial design, which would be impractical to build on a useful timeline solo. Also, dedicated testing time needs to be planned whether by the product owner or a test team.
+
+6. The biggest questions remaining in my mind are timeline and budget. Obviously, the initial design as presented is doable in a day or two of skilled work, but to make it useful it would certainly need more features, which means more time and money. At an educated guess, I would shoot for two full-time senior devs and a half-time tester for three weeks to set up all the infrastructure and have a barebones prototype ready to use. Additional features could then follow in 1-2 week iterations over a few months. If there are many features to add in a short time, 1-3 more engineers might be added, with adjustments made to mob development time/techniques.
