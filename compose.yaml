@@ -1,0 +1,7 @@
+name: distance-app-prototype
+
+services:
+  ui-app:
+    image: nginx:stable-alpine-slim
+    ports:
+      - "8080:80"
