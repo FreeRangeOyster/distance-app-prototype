@@ -9,3 +9,12 @@ services:
       - "8080:80"
     environment:
       - NODE_ENV=production
+  api-app:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    command: node build/app.js
+    expose:
+      - "4000"
+    ports:
+      - "4000"
