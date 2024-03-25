@@ -1,10 +1,11 @@
 <script lang="ts">
 	import Header from '$lib/Header.svelte';
-	import type { SearchResult } from '$lib/SearchResult';
+	import type { SearchResult } from '$lib/searchResult';
 	import AddressInput from './AddressInput.svelte';
 	import DistanceUnitSelector from './DistanceUnitSelector.svelte';
 	import Fa from 'svelte-fa';
 	import { faCalculator, faClockRotateLeft } from '@fortawesome/free-solid-svg-icons';
+	import type SearchRequest from '$lib/searchRequest';
 
 	const ALL_UNITS = <const>['Miles', 'Kilometers', 'Both'];
 	type UnitTuple = typeof ALL_UNITS;
@@ -14,17 +15,24 @@
 	let sourceAddress: string, destinationAddress: string;
 	let searchResult: SearchResult | null = null;
 
-	function calculate() {
-		searchResult = {
-			id: 1,
-			datetime: Date.now(),
-			sourceAddress,
-			destinationAddress,
-			miles: 5,
-			kilometers: 5 * 1.6
-		};
+	async function calculate(): Promise<void> {
+		const request: SearchRequest = { sourceAddress, destinationAddress };
+		const response = await fetch('http://localhost:4000/search', {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(request)
+		});
+		searchResult = await response.json();
+		console.debug(searchResult);
 	}
 </script>
+
+<svelte:head>
+	<title>Search</title>
+</svelte:head>
 
 <Header>
 	<a class="header button" slot="button" href="/history">
@@ -42,10 +50,10 @@
 				<span>Distance</span>
 				{#if searchResult}
 					{#if ['Miles', 'Both'].includes(selectedUnit)}
-						<div>{searchResult.miles}mi</div>
+						<div>{searchResult.miles.toFixed(1)}mi</div>
 					{/if}
 					{#if ['Kilometers', 'Both'].includes(selectedUnit)}
-						<div>{searchResult.kilometers}km</div>
+						<div>{searchResult.kilometers.toFixed(1)}km</div>
 					{/if}
 				{/if}
 			</div>

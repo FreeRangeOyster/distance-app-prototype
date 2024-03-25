@@ -1,13 +1,18 @@
 <script lang="ts">
+	export let data: HistoryResponse;
+
 	import Header from '$lib/Header.svelte';
-	import type { SearchResult } from '$lib/SearchResult';
+	import type { SearchResult } from '$lib/searchResult';
 	import Fa from 'svelte-fa';
 	import { faCalculator } from '@fortawesome/free-solid-svg-icons';
+	import type HistoryResponse from '$lib/historyResponse';
 
-	export let data: { results: SearchResult[] };
-
-	let results: SearchResult[] = data.results;
+	const results: SearchResult[] = data.results;
 </script>
+
+<svelte:head>
+	<title>History</title>
+</svelte:head>
 
 <Header>
 	<a slot="button" class="button header" href="/">
@@ -36,8 +41,8 @@
 						<tr>
 							<td>{result.sourceAddress}</td>
 							<td>{result.destinationAddress}</td>
-							<td>{result.miles}</td>
-							<td>{result.kilometers}</td>
+							<td>{result.miles.toFixed(2)}</td>
+							<td>{result.kilometers.toFixed(2)}</td>
 						</tr>
 					{/each}
 				{/if}
@@ -72,5 +77,8 @@
 	td {
 		background-color: #f8f8f6;
 		border-top: 1px #e0e0de;
+	}
+	tr:has(td) {
+		border-bottom: 1px solid #e0e0de;
 	}
 </style>

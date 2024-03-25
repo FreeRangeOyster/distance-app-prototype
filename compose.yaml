@@ -17,4 +17,18 @@ services:
     expose:
       - "4000"
     ports:
-      - "4000"
+      - "4000:4000"
+  db:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    shm_size: 128mb
+    environment:
+      MARIADB_USER: distance_app_user
+      MARIADB_PASSWORD: secretpassword
+      MARIADB_DATABASE: distance_app
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:

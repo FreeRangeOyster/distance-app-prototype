@@ -1,24 +1,8 @@
-import { RequestHandler, response } from 'express';
+import { RequestHandler } from 'express';
 import SearchResult from '@/models/searchResult.js';
-const searchResults: SearchResult[] = [
-	{
-		id: 1,
-		datetime: Date.now(),
-		sourceAddress: '123 Main Street',
-		destinationAddress: '456 Broadway',
-		miles: 5,
-		kilometers: 8
-	},
-	{
-		id: 2,
-		datetime: Date.now(),
-		sourceAddress: '456 Broadway',
-		destinationAddress: '123 Main Street',
-		miles: 5,
-		kilometers: 8
-	}
-];
+import { getAll } from '../connectors/db.js';
 
-export const getHistory: RequestHandler = (req, res, next) => {
+export const getHistory: RequestHandler = async (req, res, next) => {
+	const searchResults: Array<SearchResult> = await getAll();
 	res.status(200).json({ results: searchResults });
 };
