@@ -9,8 +9,8 @@
 		background-color: #f8f8f6;
 	}
 
-	#main-content :global(.button) {
-		display: inline-block;
+	:global(.button) {
+		display: flex;
 		padding: 15px 16px;
 		gap: 32px;
 		font-weight: 400;
@@ -19,5 +19,9 @@
 		letter-spacing: 0.16px;
 		margin: auto 0;
 		text-decoration: none;
+	}
+	:global(.button > svg.svelte-fa) {
+		margin: auto 0;
+		height: 16px;
 	}
 </style>

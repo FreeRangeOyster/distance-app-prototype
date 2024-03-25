@@ -3,6 +3,8 @@
 	import type { SearchResult } from '$lib/SearchResult';
 	import AddressInput from './AddressInput.svelte';
 	import DistanceUnitSelector from './DistanceUnitSelector.svelte';
+	import Fa from 'svelte-fa';
+	import { faCalculator, faClockRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
 	const ALL_UNITS = <const>['Miles', 'Kilometers', 'Both'];
 	type UnitTuple = typeof ALL_UNITS;
@@ -25,7 +27,10 @@
 </script>
 
 <Header>
-	<a class="header button" slot="button" href="/history">View Historical Queries</a>
+	<a class="header button" slot="button" href="/history">
+		View Historical Queries
+		<Fa icon={faClockRotateLeft} />
+	</a>
 </Header>
 <div class="main">
 	<div class="address-section">
@@ -52,6 +57,7 @@
 			on:click={calculate}
 		>
 			Calculate Distance
+			<Fa icon={faCalculator} />
 		</button>
 	</div>
 </div>

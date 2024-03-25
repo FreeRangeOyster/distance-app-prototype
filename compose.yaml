@@ -2,6 +2,10 @@ name: distance-app-prototype
 
 services:
   ui-app:
-    image: nginx:stable-alpine-slim
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
     ports:
       - "8080:80"
+    environment:
+      - NODE_ENV=production

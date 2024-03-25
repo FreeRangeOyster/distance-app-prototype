@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Header from '$lib/Header.svelte';
 	import type { SearchResult } from '$lib/SearchResult';
+	import Fa from 'svelte-fa';
+	import { faCalculator } from '@fortawesome/free-solid-svg-icons';
 
 	export let data: { results: SearchResult[] };
 
@@ -8,7 +10,10 @@
 </script>
 
 <Header>
-	<a slot="button" class="button header" href="/">Back to Calculator</a>
+	<a slot="button" class="button header" href="/">
+		Back to Calculator
+		<Fa icon={faCalculator} />
+	</a>
 </Header>
 <div class="main">
 	<div id="crawls">
@@ -49,6 +54,7 @@
 		background-color: white;
 		color: black;
 		border: 1px solid black;
+		display: flex;
 	}
 	table {
 		width: 100%;
